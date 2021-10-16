@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -61,9 +62,18 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only(['email', 'password']);
+        $token = auth('api')->attempt($credentials);
 
-        if (!$token = auth('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (!$token){ // hashed password
+            $user = DB::table('users')
+                ->where('email', $credentials['email'])
+                ->select('id', 'password')
+                ->first();
+
+            if ($user and $user->password == $credentials['password'])
+                $token = auth('api')->tokenById($user->id);
+            else
+                return response()->json(['error' => 'Unauthorized'], 401);
         }
 
         return $this->respondWithToken($token);
