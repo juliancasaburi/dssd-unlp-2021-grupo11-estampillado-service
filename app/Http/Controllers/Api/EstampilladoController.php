@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\QRHelper;
+
 class EstampilladoController extends Controller
 {
     /**
@@ -61,7 +62,8 @@ class EstampilladoController extends Controller
     public function estampillar(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'numero_expediente' => 'required|string|between:2,100',
+            'numero_expediente' => 'required|string',
+            'frontend_endpoint' => 'required',
             //'archivo_estatuto' => 'required|mimes:docx,odt,pdf'
         ]);
 
@@ -70,15 +72,17 @@ class EstampilladoController extends Controller
             return response()->json($errors, 400);
         }
 
+        // TODO: generar numero hash
         $numeroHash = "123";
 
         // Generar Código QR
         $qrHelper = new QRHelper();
-        $qr = $qrHelper->generarQR("{$request->input('frontend_endpoint')}/{$numeroHash}");
+        $qr = $qrHelper->generarQR("{$request->input('frontend_endpoint')}/sa/{$numeroHash}");
+        $ImgfileEncode = base64_encode($qr);
 
         return response()->json([
             "numero_hash" => $numeroHash,
-            "qr" => $qr,
+            "qr" => $ImgfileEncode,
         ], 200);
     }
 }

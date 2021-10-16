@@ -44,4 +44,8 @@ return [
         'api_url' => env('QR_API_URL'),
     ],
 
+    'backend' => [
+        'backend_endpoint' => env('BACKEND_ENDPOINT'),
+    ],
+
 ];
