@@ -64,7 +64,7 @@ class EstampilladoController extends Controller
         $validator = Validator::make($request->all(), [
             'numero_expediente' => 'required|string',
             'frontend_endpoint' => 'required',
-            //'archivo_estatuto' => 'required|mimes:docx,odt,pdf'
+            'archivo_estatuto' => 'required|mimes:docx,odt,pdf'
         ]);
 
         if ($validator->fails()) {
@@ -72,8 +72,8 @@ class EstampilladoController extends Controller
             return response()->json($errors, 400);
         }
 
-        // TODO: generar numero hash
-        $numeroHash = "123";
+        // Generar numero hash a partir del estatuto
+        $numeroHash = sha1($request->input('archivo_estatuto'));
 
         // Generar Código QR
         $qrHelper = new QRHelper();
