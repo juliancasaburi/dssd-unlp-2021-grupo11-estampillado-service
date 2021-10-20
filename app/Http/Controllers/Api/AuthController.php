@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class AuthController extends Controller
 {
     /**
-     * Get a JWT and cookie via given credentials.
+     * Get a JWT via given credentials.
      *
      * @OA\Post(
      *    path="/api/auth/login",
@@ -84,7 +84,7 @@ class AuthController extends Controller
      *
      * @OA\Post(
      *    path="/api/auth/logout",
-     *    summary="Login",
+     *    summary="Logout",
      *    description="Logout",
      *    operationId="authLogout",
      *    tags={"auth"},
