@@ -1,10 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Mail\WelcomeMailable;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Web\SociedadAnonimaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,5 +13,4 @@ use App\Http\Controllers\Web\SociedadAnonimaController;
 |
 */
 
-Auth::routes(['verify' => true]);
 Route::get('/', [App\Http\Controllers\Web\HomeController::class, 'index'])->name('web.index');
