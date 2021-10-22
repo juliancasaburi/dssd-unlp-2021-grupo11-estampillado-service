@@ -15,7 +15,7 @@ class EstampilladoController extends Controller
      * @OA\Post(
      *    path="/api/estampillar",
      *    summary="Estampillar",
-     *    description="Recibe un número de expediente y el archivo del estatuto. Entrega un número de hash y código QR",
+     *    description="Recibe una url, número de expediente y el archivo del estatuto. Entrega un número de hash y código QR",
      *    operationId="estampillar",
      *    tags={"estampillar"},
      *    security={{ "apiAuth": {} }},
